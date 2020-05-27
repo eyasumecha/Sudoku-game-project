@@ -14,5 +14,12 @@ informative (should also include the names of the files/modules addressed). For
 example, `creator.c: fix segmentation fault in main`. Commit messages are also
 generally written in the imperative.
 
+# Other
+
+If generating files for tests etc. please store them in a directory prefixed
+with `data`. For example `data-tests-1`, `data-random`, `data3` etc. This will
+be ignored by git as per the `.gitignore` and prevent it from being tracked and
+uploaded to the remote.
+
 [1]: https://missing.csail.mit.edu/2020/version-control/
 
