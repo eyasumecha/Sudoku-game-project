@@ -23,6 +23,7 @@ Also see `STYLEGUIDE.md` and `TODO.md`.
 - TESTING.md
 - COLLABORATING.md
 - STYLEGUIDE.md
+- TODO.md
 - Makefile
 - Testing scripts: testing.sh, regress.sh
 - Code...
