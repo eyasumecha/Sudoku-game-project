@@ -1,9 +1,19 @@
+# System files
 .DS_Store
-*.o
-*.dSYM/
-*.swp
-core
-data*/
-data/
+Thumbs.db
 
-sodoku.code-workspace
+# Vim
+*.swp
+
+# VS Code?
+*.code-workspace/
+
+# Custom data files
+data*/
+
+# C
+*.o
+*.out
+*.dSYM/
+core
+
