@@ -14,6 +14,9 @@ informative (should also include the names of the files/modules addressed). For
 example, `creator.c: fix segmentation fault in main`. Commit messages are also
 generally written in the imperative.
 
+Note: please remember to `git pull` before starting work and `git push` after
+you are done. In case of conflicts, *please contact the rest of the team!.*
+
 # Other
 
 If generating files for tests etc. please store them in a directory prefixed
