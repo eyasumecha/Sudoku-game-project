@@ -1,38 +1,34 @@
 # Design
 
-Authors: Pratinav Bagla, Eyasu Lemma, Wendell Wu  
+5/25/20: Pratinav Bagla, Eyasu Lemma, Wendell Wu 
 
-CS50 Final Project  
+## User interface
 
-5/25/20  
-
-# User Interface
 Command line:
 ```
-sudoku [solve|create]
+sudoku [create|solve]
 ```
 
-# Inputs and Outputs
+## Inputs and Outputs
 
-## Inputs
-Create mode: only argument
+### Inputs
 
-Solve mode: argument + puzzle from stdin
+- Create mode: command line argument.
+- Solve mode: command line argument,  puzzle from `stdin`.
 
-## Outputs
-Create mode: new puzzle to stdout
+### Outputs
 
-Solve mode: solved puzzle to stdout
+- Create mode: new puzzle to `stdout`.
+- Solve mode: solved puzzle to `stdout`.
 
-# Functional Decomposition into Modules
-Solver Module
+## Functional decomposition into modules
 
-Creator Module
+- Creator
+- Solver
 
-# Pseudocode
+## Pseudocode for logic/algorithm flow
 
-# Dataflow through Modules
-
+## Dataflow through modules
 
 # Testing
 
