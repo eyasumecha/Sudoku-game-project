@@ -2,19 +2,19 @@
 
 Members: Pratinav Bagla, Wendell Wu, Eyasu Lemma
 
-# Usage
+## Usage
 
 `make` to compile.
 
 `./sudoku [create|solve]`
 
-# Collaborating
+## Collaborating
 
 Details on how to collaborate are defined in `COLLABORATING.md`.
 
 Also see `STYLEGUIDE.md` and `TODO.md`.
 
-# Project Structure
+## Project Structure
 
 - README.md
 - REQUIREMENTS.md

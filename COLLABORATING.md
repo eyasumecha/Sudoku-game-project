@@ -1,10 +1,10 @@
 # Collaborating
 
-Project status, TODOs, and responsibilities in `TODO.md`.
+Project status, TODOs, and responsibilities are in `TODO.md`.
 
 For code, please follow the style guide defined in `STYLEGUIDE.md`.
 
-# Git
+## Git
 
 We will use git to manage our project. [This][1] is a great resource for
 understanding git's underlying model. We will use some sort of branching
@@ -17,7 +17,7 @@ generally written in the imperative.
 Note: please remember to `git pull` before starting work and `git push` after
 you are done. In case of conflicts, *please contact the rest of the team!.*
 
-# Other
+## Data Files
 
 If generating files for tests etc. please store them in a directory prefixed
 with `data`. For example `data-tests-1`, `data-random`, `data3` etc. This will

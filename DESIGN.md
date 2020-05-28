@@ -1,4 +1,4 @@
-# Sudoku Design
+# Design
 
 Authors: Pratinav Bagla, Eyasu Lemma, Wendell Wu  
 

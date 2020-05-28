@@ -1,4 +1,4 @@
-# Sudoku Requirements
+# Requirements
 
 Authors: Pratinav Bagla, Eyasu Lemma, Wendell Wu  
 
