@@ -1,4 +1,4 @@
-# Dartmouth CS50 Spring 2020 Sudoku Group Project
+# Dartmouth CS50 20S, Sudoku Project
 
 Members: Pratinav Bagla, Wendell Wu, Eyasu Lemma
 
@@ -26,5 +26,7 @@ Also see `STYLEGUIDE.md` and `TODO.md`.
 - TODO.md
 - Makefile
 - Testing scripts: testing.sh, regress.sh
-- Code...
+- creator/
+- solver/
+- common/
 
