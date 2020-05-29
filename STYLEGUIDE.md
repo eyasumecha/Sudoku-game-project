@@ -2,7 +2,7 @@
 
 This document defines a common coding style for the project.
 
-In addition to this, there are some useful tips in the (course style guide)[https://www.cs.dartmouth.edu/~cs50/Resources/CodingStyle.html].
+In addition to this, there are some useful tips in the [course style guide](https://www.cs.dartmouth.edu/~cs50/Resources/CodingStyle.html).
 However, remember that this document will always supersede it.
 
 In case of any ambiguity or confusion, please emulate the code snippets as
