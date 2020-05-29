@@ -17,7 +17,7 @@ closely as possible.
 
 Use snake case.
 
-```
+```c
 void example_function(int first_arg, int second_arg);
 char this_is_a_var;
 ```
