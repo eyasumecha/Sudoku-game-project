@@ -1,7 +1,5 @@
 # Design
 
-5/25/20: Pratinav Bagla, Eyasu Lemma, Wendell Wu 
-
 ## User interface
 
 Command line:
@@ -54,7 +52,7 @@ Each row is a pointer to an array
 
 Each column is the array itself.
 
-![Diagram]()
+![Diagram](https://beginnersbook.com/wp-content/uploads/2014/01/2D-array-updated.png)
 
 ## Pseudocode for logic/algorithm flow
 
