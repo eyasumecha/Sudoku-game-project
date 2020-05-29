@@ -28,12 +28,12 @@ sudoku [create|solve]
  
 1. Main - validate arguments and call appropriate module (wendell)
 2. Solver Module - (eyasu, pratinav)
-    -  *solver* - Function which returns true or false depending on if there is one or multiple/no solutions, takes a pointer to the 2d array, and directly edits the items inside(eyasu) (pratinav)
 3. Creator Module - (wendell)
     - *creator* - function which creates the 2d unsolved puzzle and uses *puzzlePrinter* to print the puzzle to stdout
 4. Common
     - *puzzleLoader* - take a puzzle (solved or unsolved) in from stdin and put it into a 2D array. (0’s represent missing nums) (Eyasu)
     - *puzzlePrinter* take a 2D array and print the puzzle stored inside (wendell)
+    -  *solver* - Function which returns true or false depending on if there is one or multiple/no solutions, takes a pointer to the 2d array, and directly edits the items inside(eyasu) (pratinav)
     - *RNG1Thru9* - generate a random number between 1 and 9 (pratinav)
     - *wipeBoard* - in case creator doesn’t create a unique solution, wipe the board and try again(wendell)
     - *boardCopy* - make a copy of the current board(wendell)
@@ -65,11 +65,11 @@ Each column is the array itself.
             - If all 3 rules checks pass
                 - Place the num in that spot
 2. Creator
-    - Populate a board
-    - Remove 50 random nums from the board
-    - Create a copy of the board and pass it to solver
-    - If solver returns true, then it has a unique solution and shall be printed to stdout.
-
+    - Start with a valid board
+    - Shuffle using a valid shuffle https://stackoverflow.com/questions/6924216/how-to-generate-sudoku-boards-with-unique-solutions/7280517
+    - Remove nums at random one by one until more than 1 solution
+    - Go back a step and if # removed is < 50, keep removing random nums.
+    - Once we hit 50 removed, this is the valid sudoku solution
 ## Testing
 
 Test invalid parameters
