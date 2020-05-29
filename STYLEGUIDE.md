@@ -2,8 +2,7 @@
 
 This document defines a common coding style for the project.
 
-In addition to this, there are some useful tips in the (course style guide)
-[https://www.cs.dartmouth.edu/~cs50/Resources/CodingStyle.html].
+In addition to this, there are some useful tips in the (course style guide)[https://www.cs.dartmouth.edu/~cs50/Resources/CodingStyle.html].
 However, remember that this document will always supersede it.
 
 In case of any ambiguity or confusion, please emulate the code snippets as
@@ -45,8 +44,9 @@ for (int x = 0; x < 10; x++) {
 
 ## Comments
 
-- Do not overcomment. Only comment when the code is not very clear.
-- Have informative beginning of file and beginning of function comments.
+- Do not over or undercomment: comment when something needs to be explained or
+  clarified, or when you think necessary.
+- Have informative beginning-of-file and beginning-of-function comments.
 
 ```c
 /*
@@ -83,7 +83,7 @@ for (int x = 0; x < 10; x++) {
 int example_function()
 {
     for (int x = 0; x < 10; x++) {
-        f += arr[x];            // Explain something unclear.
+        f += arr[x];            // Explain something unclear. Notice alignment.
     }
     return (f - 32) * 9/5;      // Convert fahrenheit to celsius using formula.
 }
