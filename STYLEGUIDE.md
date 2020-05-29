@@ -13,6 +13,15 @@ closely as possible.
 - Indentation: four spaces.
 - Maximum line length: 80 columns.
 
+## Naming variables and functions
+
+Use snake case.
+
+```
+void example_function(int first_arg, int second_arg);
+char this_is_a_var;
+```
+
 ## Functions
 
 - Opening curly brace on the next line of function signature.
