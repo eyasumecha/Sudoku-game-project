@@ -69,11 +69,11 @@ for (int x = 0; x < 10; x++) {
 ```c
 /**************** example_function ****************/
 /*
- * Do this.
- * Returns something if successful.
+ * Does...
+ * Returns x if successful.
  * Returns NULL if error.
- * Caller is responsible for freeing that.
- * Does not work if this.
+ * Caller is responsible for freeing...
+ * Does not work if...
  */
 ```
 
@@ -82,6 +82,11 @@ for (int x = 0; x < 10; x++) {
 /* See somefile.h for documentation. */
 ```
 
+- There should always be a space after the beginning (`//` or `/*`) of a comment.
+    ```
+    /* example comment */
+    // example comment
+    ```
 - **Paragraph comments:** a small comment at the beginning of a logical section
   describing what it does may be useful.
 - **End-of-line comments:** a short comment to clarify unclear code or call
