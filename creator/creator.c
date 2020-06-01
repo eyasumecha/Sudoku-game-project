@@ -7,15 +7,6 @@
  * only has 1 unique solution and has a minimum of 40 numbers removed.
  */
 
-
-/**
- * This function is called by program execution
- *  if "create" was called. It takes in no parameters
- *  and does not return anything. It simply creates
- *  a puzzle guaranteed to have a unique solution and
- *  prints it to stdout.
- */
-
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -33,6 +24,13 @@ static void swapcol(int **puzzle);
 static void swap3row(int **puzzle);
 static void swaprow(int **puzzle);
 
+/**
+ * This function is called by program execution
+ *  if "create" was called. It takes in no parameters
+ *  and does not return anything. It simply creates
+ *  a puzzle guaranteed to have a unique solution and
+ *  prints it to stdout.
+ */
 void create_puzzle(){
     int puzzle[9][9] = {{4, 3, 5, 2, 6, 9, 7, 8, 1},
                         {6, 8, 2, 5, 7, 1, 4, 9, 3},
