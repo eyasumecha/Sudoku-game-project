@@ -19,10 +19,10 @@ static void shuffle(int **puzzle);
 static void shuffle_col(int **puzzle);
 static void shuffle_row(int **puzzle);
 
-static void swap3col(int **puzzle);
-static void swapcol(int **puzzle);
-static void swap3row(int **puzzle);
-static void swaprow(int **puzzle);
+static void swap3col(int **puzzle, int col1, int col2);
+static void swapcol(int **puzzle, int col1, int col2);
+static void swap3row(int **puzzle, int row1, int row2);
+static void swaprow(int **puzzle, int row1, int row2);
 
 /**
  * This function is called by program execution
@@ -32,6 +32,7 @@ static void swaprow(int **puzzle);
  *  prints it to stdout.
  */
 void create_puzzle(){
+    // hardcoded template to work off of, where [0][0] = top left and [8][0] is bottom left. Essentially, [row][col]
     int puzzle[9][9] = {{4, 3, 5, 2, 6, 9, 7, 8, 1},
                         {6, 8, 2, 5, 7, 1, 4, 9, 3},
                         {1, 9, 7, 8, 3, 4, 5, 6, 2},
@@ -44,34 +45,88 @@ void create_puzzle(){
                         {2, 4, 8, 9, 5, 7, 1, 3, 6},
                         {7, 6, 3, 4, 1, 8, 2, 5, 9}};
 
+    // seed the RNG and shuffle the puzzle around.
     srand(time(0));
     shuffle(puzzle);
     
-    
-    
-    int n;
-    time_t t;
+    #ifdef DEBUG
+        printf("Shuffled template board:\n");
+        print_sudoku(puzzle);
+    #endif
 
-    //seed it
-    n = 5;
-    
-    for(int i = 0; i < n; i++){
-        printf("%d\n", rand()%50);
-    }
 }
 
+/**
+ * Shuffler functions. Calls swap functions as needed, and uses rand() to generate
+ * random col and row numbers to swap. Random seed must be set before using these functions.
+ * 
+ * Shuffles the puzzle around but guarantees that the puzzle
+ * still abides by the sudoku rules. Directly edits
+ * the puzzle which is passed in.
+ */
 static void shuffle(int **puzzle){
     shuffle_col(puzzle);
     shuffle_row(puzzle);
 }
-
 static void shuffle_col(int **puzzle){
-    // shuffle the three "major" columns in the board
+    // shuffle the three "major" columns in the board, each 9x3 column
     for(int i = 0; i < NUM_SHUFFLES; i++){
-        int col1 = 
+        int col1 = rand() % 3, col2 = rand() % 3;
+        swap3col(puzzle, col1, col2);
+    }
+
+    // pick one of the three "major" columns, and shuffle their inner 9x1 columns within the major column
+    for(int i = 0; i < 2*NUM_SHUFFLES; i++){
+        int section = rand() % 3;
+        int col1 = section * 3 + (rand() % 3), col2 = section * 3 + (rand() % 3);
+        swapcol(puzzle, col1, col2);
+    }
+}
+static void shuffle_row(int **puzzle){
+    // shuffle the three "major" rows in the board, each 3x9 row
+    for(int i = 0; i < NUM_SHUFFLES; i++){
+        int row1 = rand() % 3, row2 = rand() % 3;
+        swap3row(puzzle, row1, row2);
+    }
+
+    // pick one of the three "major" rows, and shuffle their inner 1x9 rows within the major row
+    for(int i = 0; i < 2 * NUM_SHUFFLES; i++){
+        int section = rand() % 3;
+        int row1 = section * 3 + (rand() % 3), row2 = section * 3 + (rand() % 3);
+        swaprow(puzzle, row1, row2);
     }
 }
 
-static void shuffle_row(int **puzzle){
-    
+/**
+ * Swapper functions - swap3 will swap 3 columns/rows at a time, where 1 and 2 are the section numbers.
+ */
+static void swap3col(int **puzzle, int col1, int col2){
+    if(col1 == col2) return;
+    for(int i = 0; i < 3; i++){
+        swapcol(puzzle, col1*3 + i, col2*3 + i);
+    }
+}
+static void swapcol(int **puzzle, int col1, int col2){
+    if(col1 == col2) return;
+    int temp = 0;
+    for(int i = 0; i < 9; i++){
+        temp = puzzle[i][col1];
+        puzzle[i][col1] = puzzle[i][col2];
+        puzzle[i][col2] = temp;
+    }
+}
+static void swap3row(int **puzzle, int row1, int row2){
+    if(row1 == row2) return;
+    for(int i = 0; i < 3; i++){
+        swaprow(puzzle, row1*3 + i, row2*3 + i);
+    }
+}
+static void swaprow(int **puzzle, int row1, int row2){
+    if(row1 == row2) return;
+    int temp = 0;
+    for(int j = 0; j < 9; j++){
+        temp = puzzle[row1][j];
+        puzzle[row1][j] = puzzle[row2][j];
+        puzzle[row2][j] = temp;
+    }
 }

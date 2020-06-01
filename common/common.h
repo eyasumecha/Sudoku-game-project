@@ -66,7 +66,8 @@ bool box_checker(int **array, int row, int column, int value);
  * Caller provides:
  *  valid pointer to an unsolved array
  * We return:
- *  the solved version of the 2D array
+ *  the solved version of the 2D array, the same one
+ *  that was passed in.
  */
 bool solve_sudoku(int **array);
 
