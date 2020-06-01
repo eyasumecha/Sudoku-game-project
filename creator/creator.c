@@ -15,7 +15,7 @@
 
 #define NUM_SHUFFLES 20
 
-static void shuffle(int **puzzle);
+static void shuffle(int *puzzle[]);
 static void shuffle_col(int **puzzle);
 static void shuffle_row(int **puzzle);
 
@@ -33,17 +33,30 @@ static void swaprow(int **puzzle, int row1, int row2);
  */
 void create_puzzle(){
     // hardcoded template to work off of, where [0][0] = top left and [8][0] is bottom left. Essentially, [row][col]
-    int puzzle[9][9] = {{4, 3, 5, 2, 6, 9, 7, 8, 1},
+    int template[9][9] = {{4, 3, 5, 2, 6, 9, 7, 8, 1},
                         {6, 8, 2, 5, 7, 1, 4, 9, 3},
                         {1, 9, 7, 8, 3, 4, 5, 6, 2},
-                        
+                            
                         {8, 2, 6, 1, 9, 5, 3, 4, 7},
                         {3, 7, 4, 6, 8, 2, 9, 1, 5},
                         {9, 5, 1, 7, 4, 3, 6, 2, 8},
-                        
+                            
                         {5, 1, 9, 3, 2, 6, 8, 7, 4},
                         {2, 4, 8, 9, 5, 7, 1, 3, 6},
                         {7, 6, 3, 4, 1, 8, 2, 5, 9}};
+
+    int **puzzle = (int **) calloc(9, sizeof(int *));
+    for(int i = 0; i < 9; i++){
+        puzzle[i] = (int *) calloc(9, sizeof(int));
+        for(int j = 0; j < 9; j++){
+            puzzle[i][j] = template[i][j];
+        }
+    }
+
+    #ifdef DEBUG
+        printf("Template board:\n");
+        print_sudoku(puzzle);
+    #endif
 
     // seed the RNG and shuffle the puzzle around.
     srand(time(0));
@@ -54,6 +67,10 @@ void create_puzzle(){
         print_sudoku(puzzle);
     #endif
 
+    for(int i = 0; i < 9; i++){
+        free(puzzle[i]);
+    }
+    free(puzzle);
 }
 
 /**
@@ -64,7 +81,7 @@ void create_puzzle(){
  * still abides by the sudoku rules. Directly edits
  * the puzzle which is passed in.
  */
-static void shuffle(int **puzzle){
+static void shuffle(int *puzzle[]){
     shuffle_col(puzzle);
     shuffle_row(puzzle);
 }

@@ -9,20 +9,25 @@ S = ../solver
 CC = gcc
 CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$C -I$R -I$S
 PROG = sudoku
-OBJS = sudoku.o
-LLIBS = $C/common.o $R/creator.o $S/solver.o
-#DEBUG = -D DEBUG
-
-
+OBJS = sudoku.o $C/common.o $R/creator.o $S/solver.o
+DEBUG = -D DEBUG
 
 # executable depends on object files
-$(PROG): $(OBJS) $(LLIBS)
-	$(CC) $(CFLAGS) $^ -o $@ 
+$(PROG): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
 
 # object files depend on include files
 sudoku.o: $C/common.h $R/creator.h $S/solver.h
 	$(CC) $(CFLAGS) -c -o sudoku.o sudoku.c $(DEBUG)
-#alternatively, use $(LLIBS) to be lazy, just include the whole library as dependency.
+
+$R/creator.o: $C/common.h $R/creator.h
+	$(CC) $(CFLAGS) -c -o $@ $R/creator.c $(DEBUG)
+
+$S/solver.o: $C/common.h $S/solver.h
+	$(CC) $(CFLAGS) -c -o $@ $S/solver.c $(DEBUG)
+
+$C/common.o: $C/common.h
+	$(CC) $(CFLAGS) -c -o $@ $C/common.c $(DEBUG)
 
 .PHONY: clean test valgrind
 

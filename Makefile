@@ -4,14 +4,14 @@
 # Wendell Wu, Eyasu Lemma, Pratinav Bagla - June 1st 2020
 
 MAKE = make
-.PHONY: all valgrind clean
+.PHONY: all clean
 
 ############## default: make all libs and programs ##########
 all: 
 	$(MAKE) -C common
 	$(MAKE) -C creator
 	$(MAKE) -C solver
-	$(MAKE) -C run
+	$(MAKE) -C sudoku
 
 ############### TAGS for emacs users ##########
 TAGS:  Makefile */Makefile */*.c */*.h */*.md */*.sh
@@ -24,4 +24,7 @@ clean:
 	$(MAKE) -C common clean
 	$(MAKE) -C creator clean
 	$(MAKE) -C solver clean
-	$(MAKE) -C run clean
+	$(MAKE) -C sudoku clean
+
+test:
+	sudoku/./sudoku create
