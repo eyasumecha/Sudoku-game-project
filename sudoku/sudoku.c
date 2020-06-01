@@ -3,7 +3,7 @@
  * CS50 Final Project - Main Function
  * 
  * This is the module which parses parameters and calls the appropriate
- * modules to either solve or create a puzzle.
+ * modules to either solve or create a sudoku puzzle.
  */
 
 #include <string.h>
