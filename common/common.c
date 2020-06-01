@@ -1,6 +1,6 @@
 /*
  * common.c - module for solver and creator modules of 
- * sudoku puzzel
+ * sudoku puzzle
  * 
  * see common.h for more information 
  * 
@@ -125,6 +125,7 @@ int unique_solver(int **puzzle, int **firstSolution){
     free(temp);
 }
 
+//TODO
 static void unique_solver_helper(int **temp, int **firstSolution, int *numSolutions){
     int row = 10, column = 10;
 

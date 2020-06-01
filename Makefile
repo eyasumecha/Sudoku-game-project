@@ -4,7 +4,7 @@
 # Wendell Wu, Eyasu Lemma, Pratinav Bagla - June 1st 2020
 
 MAKE = make
-.PHONY: all clean
+.PHONY: all clean valgrind
 
 ############## default: make all libs and programs ##########
 all: 
@@ -27,4 +27,7 @@ clean:
 	$(MAKE) -C sudoku clean
 
 test:
-	sudoku/./sudoku create
+	sudoku/sudoku create
+
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all sudoku/sudoku create
