@@ -5,7 +5,7 @@ CC = gcc
 
 #rules
 solver.o: ../common/common.o solver.c 
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -c -o $@
 
 clean:
 	rm -f *~ *.o *.dSYM
