@@ -16,6 +16,8 @@
 #include <unistd.h>
 #include <ctype.h>
 
+static void unique_solver_helper(int **temp, int **firstSolution, int *numSolutions);
+
 void print_sudoku(int **array){
 
     for(int i = 0; i < 9; i++){        // iterate through the 9 arrays in the pointer
@@ -97,3 +99,44 @@ bool solve_sudoku(int **array){
     return false;                   //return false if value couldn't be found for the current spot
 }
 
+int unique_solver(int **puzzle, int **firstSolution){
+    return 1;
+    
+    if(puzzle == NULL){
+        return 0;
+    }
+
+    // initialize temp array and copy puzzle into it for solving purposes
+    int **temp = (int **) calloc(9, sizeof(int *));
+    for(int i = 0; i < 9; i++){
+        temp[i] = (int *) calloc(9, sizeof(int));
+        for(int j = 0; j < 9; j++){
+            temp[i][j] = puzzle[i][j];
+        }
+    }
+
+    int numSolutions = 0; // serve as an accumulator to detect non-unique solution
+    unique_solver_helper(temp, firstSolution, &numSolutions);
+
+    // clean up
+    for(int i = 0; i < 9; i++){
+        free(temp[i]);
+    }
+    free(temp);
+}
+
+static void unique_solver_helper(int **temp, int **firstSolution, int *numSolutions){
+    int row = 10, column = 10;
+
+    for(int i = 0; i < 9; i++){         //take in an array and find the next empty spot
+        for(int j = 0; j < 9; j++){
+            if(temp[i][j] == 0){
+                row = i;
+                column = j;
+                i = 9;
+                j = 9;
+                break;
+            }
+        }
+    }
+}

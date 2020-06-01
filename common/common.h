@@ -71,4 +71,26 @@ bool box_checker(int **array, int row, int column, int value);
  */
 bool solve_sudoku(int **array);
 
+/**
+ * Solve the sudoku puzzle. Put the first
+ * solution found into firstSolution.
+ * 
+ * If firstSolution is NULL, nothing is returned except
+ * the appropriate return code.
+ * 
+ * Caller provides:
+ *  - memory (9x9 grid) for firstSolution to be stored at
+ *  - the unsolved puzzle itself, left untouched
+ * Returns:
+ *  - the first solution found, if found, copied into firstSolution
+ *  - an integer return code
+ *    0. If no solutions found or puzzle is NULL.
+ *       firstSolution remains untouched.
+ *    1. a unique solution was found. it is written to
+ *       firstSolution, if non-NULL.
+ *    2. more than one solution was found for this board. the first
+ *       solution found is placed in firstSolution, if non-NULL.
+ */
+int unique_solver(int **puzzle, int **firstSolution);
+
 #endif

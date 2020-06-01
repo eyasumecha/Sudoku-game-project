@@ -15,7 +15,7 @@
 
 #define NUM_SHUFFLES 20
 
-static void shuffle(int *puzzle[]);
+static void shuffle(int **puzzle);
 static void shuffle_col(int **puzzle);
 static void shuffle_row(int **puzzle);
 
@@ -23,6 +23,8 @@ static void swap3col(int **puzzle, int col1, int col2);
 static void swapcol(int **puzzle, int col1, int col2);
 static void swap3row(int **puzzle, int row1, int row2);
 static void swaprow(int **puzzle, int row1, int row2);
+
+static void remove_nums(int **puzzle);
 
 /**
  * This function is called by program execution
@@ -63,9 +65,15 @@ void create_puzzle(){
     shuffle(puzzle);
     
     #ifdef DEBUG
-        printf("Shuffled template board:\n");
+        printf("\nShuffled template board:\n");
         print_sudoku(puzzle);
     #endif
+
+    remove_nums(puzzle);
+    #ifdef DEBUG
+        printf("\nBoard with nums removed:\n");
+    #endif
+    print_sudoku(puzzle);
 
     for(int i = 0; i < 9; i++){
         free(puzzle[i]);
@@ -145,5 +153,35 @@ static void swaprow(int **puzzle, int row1, int row2){
         temp = puzzle[row1][j];
         puzzle[row1][j] = puzzle[row2][j];
         puzzle[row2][j] = temp;
+    }
+}
+
+/**
+ * Takes in a solved (filled) puzzle and removes
+ * 40 random numbers s.t. there is still only one
+ * unique solution to the puzzle. Random must be
+ * seeded before calling this function.
+ * Parameters and returns:
+ * It directly edits the given puzzle by setting any
+ * removed numbers to 0 and does not
+ * return anything.
+ */
+static void remove_nums(int **puzzle){
+    int removedCount = 0;
+
+    int row = rand() % 9, col = rand() % 9;
+    while(removedCount < 40){
+        while(puzzle[row][col] == 0){ // make sure the num isn't already removed
+            row = rand() % 9;
+            col = rand() % 9;
+        }
+        int temp = puzzle[row][col];
+        puzzle[row][col] = 0;
+        int numSolutions = unique_solver(puzzle, NULL);
+        if(numSolutions != 1){ // if non-unique solution or non-existent solution
+            puzzle[row][col] = temp; // put the number back and continue
+        }else{
+            removedCount++; // keep the 0 and increment removedCount
+        }
     }
 }
