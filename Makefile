@@ -11,7 +11,7 @@ S = solver
 CC = gcc
 CFLAGS = -Wall -pedantic -std=c11 -ggdb $(DEBUG) -I$C -I$R -I$S
 PROG = sudoku
-OBJS = sudoku.o $C/common.o $R/creator.o $S/solver.o
+OBJS = sudoku.o $S/solver.o $R/creator.o $C/common.o 
 
 MAKE = make
 .PHONY: all clean test valgrind

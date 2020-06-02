@@ -4,7 +4,7 @@ CFLAGS = -Wall -pedantic -std=c11 -ggdb
 CC = gcc
 
 # rules
-common.o: common.h common.c
+common.o: common.c
 	$(CC) $(CFLAGS) $^ -c -o $@
 
 clean:
