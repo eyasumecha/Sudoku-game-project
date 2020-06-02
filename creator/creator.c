@@ -55,17 +55,12 @@ void create_puzzle(){
         }
     }
 
-    #ifdef DEBUG
-        printf("Template board:\n");
-        print_sudoku(puzzle);
-    #endif
-
     // seed the RNG and shuffle the puzzle around.
     srand(time(0));
     shuffle(puzzle);
     
     #ifdef DEBUG
-        printf("\nShuffled template board:\n");
+        printf("\nRandomly shuffled template board:\n");
         print_sudoku(puzzle);
     #endif
 
@@ -177,22 +172,13 @@ static void remove_nums(int **puzzle){
             row = rand() % 9;
             col = rand() % 9;
         }
-        #ifdef DEBUG
-            printf("Trying to remove spot [%d][%d]\nNumremoved so far: %d\n", row, col, removedCount);
-        #endif
         int temp = puzzle[row][col];
         puzzle[row][col] = 0;
         int numSolutions = unique_solver(puzzle, NULL);
         if(numSolutions != 1){ // if non-unique solution or non-existent solution
             puzzle[row][col] = temp; // put the number back and continue
-            #ifdef DEBUG
-                printf("Failed to remove.\n");
-            #endif
         }else{
             removedCount++; // keep the 0 and increment removedCount
-            #ifdef DEBUG
-                printf("Removed successfully!\n");
-            #endif
         }
     }
 }
