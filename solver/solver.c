@@ -21,15 +21,9 @@ void solver(){
            x++;
        }
     }
- 
+    int check = 1;
     print_sudoku(sudoku);
-
-    printf("\n");
-    printf("\n");
-    solve_sudoku(sudoku);
-    printf("\n");
-    print_sudoku(sudoku);
-
+    solve_sudoku(sudoku, &check);
 }
 
 
