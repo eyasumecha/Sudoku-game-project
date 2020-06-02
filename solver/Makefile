@@ -5,7 +5,7 @@ CC = gcc
 DEBUG = -D DEBUG
 
 #rules
-solver.o: solver.c 
+solver.o: ../common/common.o solver.c 
 	$(CC) $(CFLAGS) $^ -c -o $@ $(DEBUG)
 
 clean:
