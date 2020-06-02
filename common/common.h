@@ -69,7 +69,7 @@ bool box_checker(int **array, int row, int column, int value);
  *  the solved version of the 2D array, the same one
  *  that was passed in.
  */
-bool solve_sudoku(int **array);
+bool solve_sudoku(int **array, int *check);
 
 /**
  * Solve the sudoku puzzle. Put the first
