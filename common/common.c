@@ -15,12 +15,12 @@
 
 /**************** LOCAL FUNCTION PROTOTYPES ****************/
 static bool unique_solver_helper(int temp[9][9], int first_solution[9][9], int *num_solutions);
-static bool row_checker(int array[9][9], int row, int value);
-static bool column_checker(int array[9][9], int column, int value);
-static bool box_checker(int array[9][9], int row, int column, int value);
+static bool is_valid(int array[9][9], int row, int col, int val);
 
 /**************** GLOBAL FUNCTIONS ****************/
 
+/**************** print_sudoku ****************/
+/* see common.h */
 void print_sudoku(int array[9][9])
 {
     for (int i = 0; i < 9; i++) {           // iterate through the 9 arrays in the pointer
@@ -32,6 +32,8 @@ void print_sudoku(int array[9][9])
     }
 }
 
+/**************** unique_solver ****************/
+/* see common.h */
 int unique_solver(int puzzle[9][9], int first_solution[9][9])
 {
     // copy puzzle to temp variable
@@ -47,6 +49,7 @@ int unique_solver(int puzzle[9][9], int first_solution[9][9])
 /**************** mycalloc ****************/
 /*
  * Behaves like calloc but exits when returns NULL.
+ * See common.h.
  */
 void * mycalloc(const size_t nmemb, const size_t size)
 {
@@ -96,7 +99,7 @@ static bool unique_solver_helper(int temp[9][9], int first_solution[9][9], int *
     // empty spot was found
     for (int i = 1; i <= 9; i++) {
         // if the number 'i' satisfies the rules for its spot, 
-        if (box_checker(temp, row, col, i) && column_checker(temp, col, i) && row_checker(temp, row, i)) {
+        if (is_valid(temp, row, col, i)) {
             // set that spot to 'i'
             temp[row][col] = i;
 
@@ -112,67 +115,36 @@ static bool unique_solver_helper(int temp[9][9], int first_solution[9][9], int *
     return true;
 }
 
-/**************** row_checker ****************/
-/* Check if there is no other number along the row equals
- * to the given value
- * Caller provides:
- *  valid pointer to array, row to be checked, and value to check
- * We return:
- *  true if the value doesn't exist in the row
- *  false if the value does exist  
+/**************** is_valid ****************/
+/*
+ * Checks if the given value in [row, col] in the given puzzle is valid by
+ * checking for duplicates in its row, column, and box.
+ * Caller provides a valid int[9][9] pointer containing the puzzle, the row and
+ * column indices of the number, and the value itself.
+ * Returns true if the num is valid, i.e. no duplicates, or if the num <= 0.
+ * Returns false if the num is invalid, i.e. duplicates were found.
  */
-static bool row_checker(int array[9][9], int row, int value)
+static bool is_valid(int array[9][9], int row, int col, int val)
 {
-    for (int i = 0; i < 9; i++) {  //iterate through the current row or index of the array
-        if (array[row][i] == value) {  //check if any of the elements equal given value 
-            return false;              // return false if any equal
-        }
-    }
+    // return true if num <= 0
+    if (val <= 0) return true;
 
-    return true;   //return true if non equal 
-}
+    // find the starting column and row of the box
+    int start_row = row - (row % 3);
+    int start_col = col - (col % 3);
 
-/**************** column_checker ****************/
-/* Check if there is no other number along the column equaling    
- *  the given value
- * Caller provides:  
- *  valid pointer to array, column to be checked, and value to check
- * We return:
- *  true if the value doesn't exist in the row
- *  false if the values doesn't exist
- */
-static bool column_checker(int array[9][9], int column, int value)
-{
-    for (int i = 0; i < 9; i++) {     //iterate through the current column or index of the array
-        if (array[i][column] == value) {  //check if any of the elements equal given value 
-            return false;                // return false if any equal          
-        }
-    }
-
-    return true;        //return true if non equal 
-}
-
-/**************** box_checker ****************/
-/* Check if there is another number along the corresponsing box 
- * of the given column and row
- * Caller provides:
- *  valid pointer to array, column and row to be checked, and value to check with
- * We return:
- *  true if the value doesn't exist in the box
- *  false if the value exists  
- */
-static bool box_checker(int array[9][9], int row, int column, int value)
-{
-    int startRow = row - (row % 3);            //find the starting column and row of the box 
-    int startColumn = column - (column % 3);
-
-    for (int i = 0; i < 3; i++) {     //iterate through that box and check if any equal value 
+    // iterate over every num in row, column, and box
+    for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
-            if (array[i + startRow][j + startColumn] == value)
-            return false;               // return false if any equal those values 
+            // return false if any num in row, col, or box matches val.
+            if (array[i + start_row][j + start_col] == value || // if num in box matches val
+                array[row][i * 3 + j] == value ||               // if num in row matches val
+                array[i * 3 + j][col] == value)                 // if num in col matches val
+                return false;
         }
     }
 
-    return true;       //return true if non equal the value in the box
+    // return true if nothing matches, therefore num is valid.
+    return true; 
 }
 
