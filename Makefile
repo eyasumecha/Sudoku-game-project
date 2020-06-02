@@ -1,33 +1,57 @@
-# Project Root Makefile
-# Makefile for CS50 Sudoku Final Project
-#
-# Wendell Wu, Eyasu Lemma, Pratinav Bagla - June 1st 2020
+# Makefile for the creator module
+# CS50 Final Project
+
+C = common
+R = creator
+S = solver
+
+# Comment or uncomment the below statement to enable/disable debug printing.
+# DEBUG = -D DEBUG
+
+CC = gcc
+CFLAGS = -Wall -pedantic -std=c11 -ggdb $(DEBUG) -I$C -I$R -I$S
+PROG = sudoku
+OBJS = sudoku.o $C/common.o $R/creator.o $S/solver.o
 
 MAKE = make
-.PHONY: all clean valgrind
+.PHONY: all clean test valgrind
 
 ############## default: make all libs and programs ##########
 all: 
-	$(MAKE) -C common
-	$(MAKE) -C creator
-	$(MAKE) -C solver
-	$(MAKE) -C sudoku
+	$(MAKE) -C $C
+	$(MAKE) -C $R
+	$(MAKE) -C $S
+	$(MAKE) $(PROG)
 
-############### TAGS for emacs users ##########
-TAGS:  Makefile */Makefile */*.c */*.h */*.md */*.sh
-	etags $^
+# executable depends on object files
+$(PROG): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
+
+# object files depend on include files
+sudoku.o: $C/common.h $R/creator.h $S/solver.h
+	$(CC) $(CFLAGS) -c -o $@ sudoku.c 
+
+$R/creator.o: $C/common.h $R/creator.h
+	$(CC) $(CFLAGS) -c -o $@ $R/creator.c 
+
+$S/solver.o: $C/common.h $S/solver.h
+	$(CC) $(CFLAGS) -c -o $@ $S/solver.c
+
+$C/common.o: $C/common.h
+	$(CC) $(CFLAGS) -c -o $@ $C/common.c
 
 ############## clean  ##########
 clean:
-	rm -f *~
-	rm -f TAGS
-	$(MAKE) -C common clean
-	$(MAKE) -C creator clean
-	$(MAKE) -C solver clean
-	$(MAKE) -C sudoku clean
+	rm -f $(PROG)
+	rm -f *~ *.o
+	rm -rf *.dSYM
+	$(MAKE) -C $C clean
+	$(MAKE) -C $R clean
+	$(MAKE) -C $S clean
 
 test:
-	sudoku/sudoku create
+	./$(PROG) create
 
 valgrind:
-	valgrind --leak-check=full --show-leak-kinds=all sudoku/sudoku create
+	valgrind --leak-check=full --show-leak-kinds=all ./$(PROG) create
+
