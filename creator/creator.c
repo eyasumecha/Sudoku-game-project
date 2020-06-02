@@ -8,12 +8,13 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+
 #include "common.h"
 
-static void shuffle(int **puzzle);
-static void remove_nums(int **puzzle);
-static void get_rand_orientation(int *arr);
-static void copy_puzzle(int **og, int **copy);
+static void shuffle(int puzzle[9][9]);
+static void remove_nums(int puzzle[9][9]);
+static void get_rand_orientation(int arr[3]);
+static void copy_puzzle(int og[9][9], int copy[9][9]);
 
 /**************** sudoku_create ****************/
 /*
@@ -41,7 +42,7 @@ void sudoku_create(void)
 
     // Shuffle the template puzzle to get a new, valid puzzle.
     srand(time(0));     // seed RNG
-    shuffle(&puzzle); 
+    shuffle(puzzle); 
 
     #ifdef DEBUG
         printf("\nRandomly shuffled template board:\n");
@@ -49,11 +50,11 @@ void sudoku_create(void)
     #endif
 
     // Remove min. 40 slots making sure there is a unique solution.
-    remove_nums(&puzzle);
+    remove_nums(puzzle);
     #ifdef DEBUG
         printf("\nBoard with nums removed:\n");
     #endif
-    print_sudoku(&puzzle);
+    print_sudoku(puzzle);
 }
 
 /**************** shuffle ****************/
@@ -63,11 +64,10 @@ void sudoku_create(void)
  * Directly edits the given puzzle.
  */
 
-static void shuffle(int **puzzle)
+static void shuffle(int puzzle[9][9])
 {
     int puzzle_copy[9][9]= {0};
     int pos_total[2][9] = {0};
-    int *cols_copy[9] = {0};
     int pos_major[3]= {0};
     int pos_minor[3]= {0};
 
@@ -76,9 +76,9 @@ static void shuffle(int **puzzle)
     // positions for each major 9x3/3x9 section, then the 9x1/1x9 rows/columns
     // within them.
     for (int i = 0; i < 2; i++) {
-        get_rand_orientation(&pos_major);
+        get_rand_orientation(pos_major);
         for (int j = 0; j < 3; j++) {
-            get_rand_orientation(&pos_minor);
+            get_rand_orientation(pos_minor);
             for (int k = 0; k < 3; k++)
                 pos_total[i][j * 3 + k] = pos_major[j] * 3 + pos_minor[k];
         }
@@ -88,19 +88,20 @@ static void shuffle(int **puzzle)
     // shuffled col/row positions.
 
     // Re-orient cols.
-    copy_puzzle(puzzle, &puzzle_copy);
+    copy_puzzle(puzzle, puzzle_copy);
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
             puzzle[j][i] = puzzle_copy[j][pos_total[0][i]];
         }
     }
 
-    // Re-orient rows. No need to make copy of entire 2d array, just of the
-    // pointers to each row array.
-    for (int i = 0; i < 9; i++)
-        cols_copy[i] = puzzle[i];
-    for (int i = 0; i < 9; i++)
-        puzzle[i] = cols_copy[pos_total[1][i]];
+    // Re-orient rows.
+    copy_puzzle(puzzle, puzzle_copy);
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            puzzle[i][j] = puzzle_copy[pos_total[1][i]][j];
+        }
+    }
 }
 
 /**************** remove_nums ****************/
@@ -113,7 +114,7 @@ static void shuffle(int **puzzle)
  * will be edited directly by replacing nums with zeros.
  * Caller is responsible for seeding rand before calling the function.
  */
-static void remove_nums(int **puzzle)
+static void remove_nums(int puzzle[9][9])
 {
     int removed_count = 0;
     int num_failed_tries = 0;               // records the num of continuously failed tries
@@ -151,11 +152,11 @@ static void remove_nums(int **puzzle)
  * Caller must provide a valid pointer to an int[].
  * Caller is responsible for seeding srand before calling the function.
  */
-static void get_rand_orientation(int *arr)
+static void get_rand_orientation(int arr[3])
 {
     // generate a random int between 0 and 3 (excluding 3) for each array item.
     for (int i = 0; i < 3; i++) {
-        int arr[i] = rand() * 3;
+        arr[i] = rand() % 3;
         // if the generated int is already present in the array, repeat.
         for (int j = 0; j < i; j++) {
             if (arr[i] == arr[j]) {
@@ -171,7 +172,7 @@ static void get_rand_orientation(int *arr)
  * Copies the given puzzle int[9][9] to the given int[9][9].
  * Caller provides valid pointers to the original and copy arrays.
  */
-static void copy_puzzle(int **og, int **copy)
+static void copy_puzzle(int og[9][9], int copy[9][9])
 {
     for (int i = 0; i < 9; i++)
         for (int j = 0; j < 9; j++)

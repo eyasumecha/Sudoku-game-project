@@ -8,9 +8,8 @@ CC = gcc
 CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$C
 PROG = creator.o
 OBJS = creator.c
-DEBUG = -D DEBUG
 
-
+# DEBUG = -D DEBUG
 
 # make the object file for creator
 $(PROG): $(OBJS)
