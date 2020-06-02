@@ -3,7 +3,7 @@
 CFLAGS = -Wall -pedantic -std=c11 -ggdb  
 CC = gcc
 
-#rules
+# rules
 common.o: common.c
 	$(CC) $(CFLAGS) $^ -c -o $@
 

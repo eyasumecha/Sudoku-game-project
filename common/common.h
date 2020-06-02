@@ -16,62 +16,18 @@
 #include <unistd.h>
 #include <ctype.h>
 
-
-/*********print_sudoku**********/
-/* print the sudoku puzzel
+/**************** print_sudoku ****************/
+/* print the sudoku puzzle
  * 
  * Caller provides:
  *  valid pointer to a 2D array
  * We return:
  *  the 2D array printed in a 9 by 9 grid
  */
-void print_sudoku(int **array);
+void print_sudoku(int array[9][9]);
 
-
-/********row_checker***************/
-/* Check if there is no other number along the row equals
- * to the given value
- * Caller provides:
- *  valid pointer to array, row to be checked, and value to check
- * We return:
- *  true if the value doesn't exist in the row
- *  false if the value does exist  
- */
-bool row_checker(int **array, int row, int value);
-
-/*********** column_checker ********************/
-/* Check if there is no other number along the column equaling    
- *  the given value
- * Caller provides:  
- *  valid pointer to array, column to be checked, and value to check
- * We return:
- *  true if the value doesn't exist in the row
- *  false if the values doesn't exist
- */
-bool column_checker(int **array, int column, int value);
-
-/*********** box_checker *************/
-/* Check if there is another number along the corresponsing box 
- * of the given column and row
- * Caller provides:
- *  valid pointer to array, column and row to be checked, and value to check with
- * We return:
- *  true if the value doesn't exist in the box
- *  false if the value exists  
- */
-bool box_checker(int **array, int row, int column, int value);
-
-/*********** solve_sudoku ***************/
-/* Solve the sudoku puzzel given a 2D array
- * Caller provides:
- *  valid pointer to an unsolved array
- * We return:
- *  the solved version of the 2D array, the same one
- *  that was passed in.
- */
-bool solve_sudoku(int **array, int *check);
-
-/**
+/**************** unique_solver ****************/
+/*
  * Solve the sudoku puzzle. Put the first
  * solution found into firstSolution.
  * 
@@ -91,6 +47,14 @@ bool solve_sudoku(int **array, int *check);
  *    2. more than one solution was found for this board. the first
  *       solution found is placed in firstSolution, if non-NULL.
  */
-int unique_solver(int **puzzle, int **firstSolution);
+int unique_solver(int puzzle[9][9], int firstSolution[9][9]);
+
+/**************** mycalloc ****************/
+/*
+ * Behaves like calloc but prints an error message and exits when calloc fails.
+ * Returns pointer returned by calloc.
+ */
+void * mycalloc(const size_t nmemb, const size_t size);
 
 #endif
+
