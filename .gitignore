@@ -5,7 +5,7 @@ Thumbs.db
 # Vim
 *.swp
 
-# VS Code?
+# VS Code
 *.code-workspace
 
 # Custom data files
@@ -17,3 +17,5 @@ data*/
 *.dSYM/
 core
 
+#Program exec
+sudoku/sudoku
