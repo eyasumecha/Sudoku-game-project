@@ -27,7 +27,7 @@ void sudoku_solver(void)
             sudoku[row][col] = c - '0';         // converts digit from ASCII to int
             expect_digit = false;
             // increment [row, col] values accordingly
-            if (col >= 9) {
+            if (++col >= 9) {
                 col = 0;
                 row += 1;
             }

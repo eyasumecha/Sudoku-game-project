@@ -5,7 +5,7 @@
 /*
  * Called by sudoku when solve is the argument passed.
  */
-void sudoku_solver();
+void sudoku_solver(void);
 
 #endif
 
