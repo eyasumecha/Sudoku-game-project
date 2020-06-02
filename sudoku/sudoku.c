@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
     if(strcmp(argv[1], "create") == 0){
         create_puzzle();
     }else if(strcmp(argv[1], "solve") == 0){
-        solve_puzzle();
+        solver();
     }else{
         fprintf(stderr, "Argument was not create or solve.\n%s", USAGE);
         return 2;

@@ -7,14 +7,13 @@ C = ../common
 CC = gcc
 CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$C
 PROG = creator.o
-OBJS = creator.c creator.h
-LLIBS = $C/common.o
+OBJS = creator.c
 #DEBUG = -D DEBUG
 
 
 
 # make the object file for creator
-$(PROG): $(OBJS) $(LLIBS)
+$(PROG): $(OBJS)
 	$(CC) $(CFLAGS) $^ -c -o $@ $(DEBUG)
 
 .PHONY: clean test valgrind

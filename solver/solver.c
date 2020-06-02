@@ -22,15 +22,22 @@ void solver(){
            x++;
        }
     }
+    
+    // check if the input puzzle was correctly parsed.
+    if(x != 9){
+        fprintf(stderr, "Input sudoku was of incorrect format\n");
+        for(int i = 0; i < 9; i++){
+            free(sudoku[i]);
+        }
+        free(sudoku);
+        return;
+    }
+ 
+    print_sudoku(sudoku);
+
     int check = 1;
     print_sudoku(sudoku);
     solve_sudoku(sudoku, &check);
     
-}
 
-
-int main(){
-    solver();
-
-    return 0;
 }
