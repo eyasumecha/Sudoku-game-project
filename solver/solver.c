@@ -4,7 +4,6 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
-
 #include "common.h"
 
 void sudoku_solver(void)
