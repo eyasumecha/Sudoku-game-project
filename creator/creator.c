@@ -105,33 +105,40 @@ static void shuffle(int **puzzle)
 
 /**************** remove_nums ****************/
 /*
- * Takes in a solved (filled) puzzle and removes
- * 40 random numbers s.t. there is still only one
- * unique solution to the puzzle. Random must be
- * seeded before calling this function.
- * Parameters and returns:
- * It directly edits the given puzzle by setting any
- * removed numbers to 0 and does not
- * return anything.
+ * Takes in a solved (filled) puzzle and removes at least 40 random numbers so
+ * that there is still only one solution to the puzzle.
+ * After removing at least 40 nums, if it fails to remove a num three times
+ * continuously, it stops removing numbers.
+ * Caller provides a valid pointer to an int[9][9] containing the puzzle, that
+ * will be edited directly by replacing nums with zeros.
+ * Caller is responsible for seeding rand before calling the function.
  */
 static void remove_nums(int **puzzle)
 {
-    int removedCount = 0;
+    int removed_count = 0;
+    int num_failed_tries = 0;               // records the num of continuously failed tries
     int row, col;
-    while (removedCount < 40) {
-        row = rand() % 9;
-        col = rand() % 9;
-        while (puzzle[row][col] == 0) {     // make sure the num isn't already removed
+    while (removed_count <= 65) {           // 16 is the lowest number of starting clues to get a unique solution
+        // get a num that has not yet been removed
+        do {
             row = rand() % 9;
             col = rand() % 9;
-        }
+        } while (puzzle[row][col] == 0);
+
+        // remove num from puzzle.
         int temp = puzzle[row][col];
         puzzle[row][col] = 0;
-        int numSolutions = unique_solver(puzzle, NULL);
-        if (numSolutions != 1) {            // if non-unique solution or non-existent solution
-            puzzle[row][col] = temp;        // put the number back and continue
+
+        int num_solutions = unique_solver(puzzle, NULL);
+        if (num_solutions != 1) {           // if non-unique solution or non-existent solution
+            puzzle[row][col] = temp;        // put the number back
+            num_failed_tries += 1;          // increment the num of continuous failed tries
+            // if we have removed at least 40 nums and have failed to remove
+            // nums at least 3 times continuously, break.
+            if (removed_count >= 40 && num_failed_tries == 3) break;
         } else {
-            removedCount++;                 // keep the 0 and increment removedCount
+            removed_count++;                // keep the 0 and increment removed_count
+            num_failed_tries = 0;           // reset the num of continuously failed tries
         }
     }
 }
