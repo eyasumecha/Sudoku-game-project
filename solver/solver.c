@@ -7,23 +7,43 @@
 
 #include "common.h"
 
-void sudoku_solver()
+void sudoku_solver(void)
 {
     int sudoku[9][9]= {0};
-    int value;
     int row = 0, col = 0;
+    bool expect_digit = true;               // flag to keep track of if to expect digit (only after at least one whitespace)
+    char c;
 
-    while (scanf("%d", &value) != EOF && row < 9) {
-       sudoku[row][col] = value;
-       if (++col >= 9) {
-           col = 0;
-           row += 1;
-       }
+    // read chars from stdin until EOF or error
+    while ((c = fgetc(stdin)) != EOF) {
+        // ignore whitespace (' ', '\t', '\n', '\v', '\f', '\r')
+        if (isspace(c)) {
+            expect_digit = true;
+            continue;
+        }
+
+        // if char is digit and we were expecting a digit (previous char was whitespace)
+        if (isdigit(c) && expect_digit) {
+            sudoku[row][col] = c - '0';         // converts digit from ASCII to int
+            expect_digit = false;
+            // increment [row, col] values accordingly
+            if (col >= 9) {
+                col = 0;
+                row += 1;
+            }
+            // break if we are done filling up the board
+            if (row >= 9)
+                break;
+        } else {
+            // invalid input: bad character or multiple digits at once.
+            fprintf(stderr, "Invalid input: only digits and whitespace allowed. Each digit must be separated by at least one whitespace character.\n");
+            return;
+        }
     }
-    
-    // check if the input puzzle was correctly parsed.
-    if (row != 9) {
-        fprintf(stderr, "Input sudoku was of incorrect format. Exiting...\n");
+
+    // check if board has been filled
+    if (row < 9) {
+        fprintf(stderr, "Invalid input: not enough numbers.\n");
         return;
     }
 
