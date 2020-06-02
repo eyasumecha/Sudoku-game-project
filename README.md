@@ -8,6 +8,10 @@ Members: Pratinav Bagla, Wendell Wu, Eyasu Lemma
 
 `./sudoku [create|solve]`
 
+To enable/disable DEBUG prints, uncomment/comment the DEBUG variable in the each module's respective Makefile.
+
+Please note: piping sudoku create to sudoku solve will not work with debug statements enabled from creator module. Please disable debug flag in the creator module makefile AND sudoku module makefile by commenting it out before attempting to pipe.
+
 ## Collaborating
 
 Details on how to collaborate are defined in `COLLABORATING.md`.

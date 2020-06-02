@@ -16,7 +16,7 @@
 #include <unistd.h>
 #include <ctype.h>
 
-static void unique_solver_helper(int **temp, int **firstSolution, int *numSolutions);
+static bool unique_solver_helper(int **temp, int **firstSolution, int *numSolutions);
 
 void print_sudoku(int **array){
 
@@ -100,8 +100,6 @@ bool solve_sudoku(int **array){
 }
 
 int unique_solver(int **puzzle, int **firstSolution){
-    return 1;
-    
     if(puzzle == NULL){
         return 0;
     }
@@ -123,21 +121,56 @@ int unique_solver(int **puzzle, int **firstSolution){
         free(temp[i]);
     }
     free(temp);
+
+    return numSolutions;
 }
 
-//TODO
-static void unique_solver_helper(int **temp, int **firstSolution, int *numSolutions){
-    int row = 10, column = 10;
+/**
+ * Recursive helper function for unique_solver.
+ * Logic is documented in-line.
+ */
+static bool unique_solver_helper(int **temp, int **firstSolution, int *numSolutions){
+    int row = 9, col = 9;
 
-    for(int i = 0; i < 9; i++){         //take in an array and find the next empty spot
+    //find the next empty spot in the array;
+    for(int i = 0; i < 9; i++){
         for(int j = 0; j < 9; j++){
             if(temp[i][j] == 0){
                 row = i;
-                column = j;
-                i = 9;
-                j = 9;
+                col = j;
                 break;
             }
         }
     }
+
+    //if no empty spots found, increment numSolutions and return appropriate bool
+    if(row == 9){
+        (*numSolutions)++;
+        if(*numSolutions == 1 && firstSolution != NULL){ // if this is the first solution, copy to firstSolution
+            for(int i = 0; i < 9; i++)
+                for(int j = 0; j < 9; j++)
+                    firstSolution[i][j] = temp[i][j];
+        }else if(*numSolutions > 1){ // if this is the second solution, don't do anything, return 2 to stop recursion.
+            return false;
+        }
+        return true;
+    }
+
+    //empty spot was found
+    for(int i = 1; i <= 9; i++){
+        //if the number 'i' satisfies the rules for its spot, 
+        if(box_checker(temp, row, col, i) && column_checker(temp, col, i) && row_checker(temp, row, i)){
+            //set that spot to 'i'
+            temp[row][col] = i;
+
+            //if second solution found, stop recursing
+            if(!unique_solver_helper(temp, firstSolution, numSolutions))
+                return false;
+            else //otherwise, reset to 0 and try more numbers
+                temp[row][col] = 0;
+        }
+    }
+
+    //no numbers worked for that spot, keep trying to look for more possibilities before
+    return true;
 }

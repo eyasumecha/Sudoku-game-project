@@ -169,19 +169,30 @@ static void swaprow(int **puzzle, int row1, int row2){
 static void remove_nums(int **puzzle){
     int removedCount = 0;
 
-    int row = rand() % 9, col = rand() % 9;
+    int row, col;
     while(removedCount < 40){
+        row = rand() % 9;
+        col = rand() % 9;
         while(puzzle[row][col] == 0){ // make sure the num isn't already removed
             row = rand() % 9;
             col = rand() % 9;
         }
+        #ifdef DEBUG
+            printf("Trying to remove spot [%d][%d]\nNumremoved so far: %d\n", row, col, removedCount);
+        #endif
         int temp = puzzle[row][col];
         puzzle[row][col] = 0;
         int numSolutions = unique_solver(puzzle, NULL);
         if(numSolutions != 1){ // if non-unique solution or non-existent solution
             puzzle[row][col] = temp; // put the number back and continue
+            #ifdef DEBUG
+                printf("Failed to remove.\n");
+            #endif
         }else{
             removedCount++; // keep the 0 and increment removedCount
+            #ifdef DEBUG
+                printf("Removed successfully!\n");
+            #endif
         }
     }
 }

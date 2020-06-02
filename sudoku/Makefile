@@ -10,7 +10,8 @@ CC = gcc
 CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$C -I$R -I$S
 PROG = sudoku
 OBJS = sudoku.o $C/common.o $R/creator.o $S/solver.o
-DEBUG = -D DEBUG
+# Comment or uncomment the below statement to enable/disable debug printing.
+#DEBUG = -D DEBUG
 
 # executable depends on object files
 $(PROG): $(OBJS)
