@@ -5,6 +5,6 @@
  * Called by sudoku when create is passed
  * as an argument to sudoku
  */
-void create_puzzle();
+void sudoku_create();
 
 #endif
