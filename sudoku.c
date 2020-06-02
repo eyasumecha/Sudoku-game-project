@@ -1,8 +1,13 @@
-/**
- * CS50 Final Project - Main Function
- * 
- * This is the module which parses parameters and calls the appropriate
- * modules to either solve or create a sudoku puzzle.
+/*
+ * sudoku.c - CS50 Final Project, Main Function
+ * This module is the main driver of the sudoku program. It parses command line
+ * arguments and calls the appropriate modules to either create or solve a
+ * 9x9 sudoku puzzle.
+ * The creator outputs the puzzle with rows separated with newlines and columns
+ * separated with spaces to stdout.
+ * The solver accepts digits and whitespace from stdin, with each digit
+ * separated by at least one whitespace character. Whitespace is ignored.
+ * See docs for more info.
  */
 
 #include <string.h>

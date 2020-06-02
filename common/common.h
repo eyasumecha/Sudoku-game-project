@@ -3,7 +3,6 @@
  * the solver and creator sudoku modules 
  * 
  * Pratinav Bagla, Wendell Wu, and Eyasu Fetene 
- *  May 29 2020
  */
 
 #ifndef __COMMON_H

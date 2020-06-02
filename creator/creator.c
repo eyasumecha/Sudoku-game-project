@@ -1,8 +1,8 @@
 /*
- * CS50 Final Project - Sudoku Creator Module
- * 
- * This module is responsible for creating a new randomized sudoku puzzle which
- * only has 1 unique solution and has a minimum of 40 numbers removed.
+ * creator.c - CS50 Final Project, Sudoku Creator Module
+ * This module is responsible for creating a new randomized 9x9 sudoku puzzle
+ * with a unique solution, and has a minimum of 40 numbers removed. The generated
+ * sudoku is outputted to stdout. See docs for more info.
  */
 
 #include <stdio.h>

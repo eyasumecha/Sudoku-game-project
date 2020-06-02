@@ -1,3 +1,9 @@
+/*
+ * solver.c - implements the solver module. Accepts a 9x9 sudoku puzzle from
+ * stdin (digits separated by whitespace) and outputs the solved puzzle to
+ * stdout. See docs for more info.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
