@@ -137,9 +137,9 @@ static bool is_valid(int array[9][9], int row, int col, int val)
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             // return false if any num in row, col, or box matches val.
-            if (array[i + start_row][j + start_col] == value || // if num in box matches val
-                array[row][i * 3 + j] == value ||               // if num in row matches val
-                array[i * 3 + j][col] == value)                 // if num in col matches val
+            if (array[i + start_row][j + start_col] == val ||   // if num in box matches val
+                array[row][i * 3 + j] == val ||                 // if num in row matches val
+                array[i * 3 + j][col] == val)                   // if num in col matches val
                 return false;
         }
     }
