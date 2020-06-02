@@ -60,7 +60,7 @@ bool box_checker(int **array, int row, int column, int value){
     return true;       //return true if non equal the value in the box
 }
 
-bool solve_sudoku(int **array){
+int solve_sudoku(int **array, int *check){
     int row = 10, column = 10;
 
     for(int i = 0; i < 9; i++){         //take in an array and find the immediate empty spot
@@ -76,24 +76,32 @@ bool solve_sudoku(int **array){
     }
 
     if( row == 10){    //if inital row value unchanged then return true
-        return true;   //meaning puzzel is solved 
+        if(*check == 1){
+            printf("\n");
+            print_sudoku(array);
+            (*check)++;
+            return 1;
+        }
+        else{
+            return 2;   //meaning puzzel is solved 
+        }    
     }
 
     for(int z = 1; z < 10; z++){    //if empty spot found 
         if(box_checker(array, row, column, z) && column_checker(array, column, z) && row_checker(array, row, z))
         {                               //iterate through the possible 9 values and check if they 
             array[row][column] = z;     //pass the box, row, and column requirments 
-            printf("\n");               // if so update the value 
-            print_sudoku(array);
+                                                // if so update the value 
+           
 
-            if(solve_sudoku(array)){   //recursively call the solve module on the next empty spot
-                return true;
+            if(solve_sudoku(array, check) == 2){   //recursively call the solve module on the next empty spot
+                return 2;
             }
 
             array[row][column] = 0;   //if the recursively called falls out, back track and try with 
         }                               // a new value 
     }
 
-    return false;                   //return false if value couldn't be found for the current spot
+    return 1;                   //return false if value couldn't be found for the current spot
 }
 

@@ -4,7 +4,8 @@
 #include <string.h>
 #include <unistd.h>
 #include <ctype.h>
-#include <common.h>
+
+#include "common.h"
 
 void solver(){
     int **sudoku = (int **)malloc(9 * sizeof(int*));
@@ -24,6 +25,7 @@ void solver(){
     int check = 1;
     print_sudoku(sudoku);
     solve_sudoku(sudoku, &check);
+    
 }
 
 

@@ -68,6 +68,6 @@ bool box_checker(int **array, int row, int column, int value);
  * We return:
  *  the solved version of the 2D array
  */
-bool solve_sudoku(int **array);
+bool solve_sudoku(int **array, int *check);
 
 #endif
