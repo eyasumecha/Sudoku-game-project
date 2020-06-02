@@ -15,7 +15,8 @@
 
 /**************** LOCAL FUNCTION PROTOTYPES ****************/
 static bool unique_solver_helper(int temp[9][9], int first_solution[9][9], int *num_solutions);
-static bool is_valid(int array[9][9], int row, int col, int val);
+static bool is_puzzle_valid(int puzzle[9][9]);
+static bool is_num_valid(int array[9][9], int row, int col, int val);
 
 /**************** GLOBAL FUNCTIONS ****************/
 
@@ -36,11 +37,18 @@ void print_sudoku(int array[9][9])
 /* see common.h */
 int unique_solver(int puzzle[9][9], int first_solution[9][9])
 {
+    // check if puzzle is valid
+    if (!is_puzzle_valid(puzzle)) {
+        fprintf(stderr, "Inputted sudoku is invalid!\n");
+        return 0;
+    }
+
     // copy puzzle to temp variable
     int temp[9][9] = {0};
     for (int i = 0; i < 9; i++)
         for (int j = 0; j < 9; j++)
             temp[i][j] = puzzle[i][j];
+
     int num_solutions = 0;           // serve as an accumulator to detect non-unique solution
     unique_solver_helper(temp, first_solution, &num_solutions);
     return num_solutions;
@@ -86,11 +94,11 @@ static bool unique_solver_helper(int temp[9][9], int first_solution[9][9], int *
     // if no empty spots found, increment num_solutions and return appropriate bool
     if (row == 9) {
         (*num_solutions)++;
-        if (*num_solutions == 1 && first_solution != NULL) { // if this is the first solution, copy to first_solution
+        if (*num_solutions == 1 && first_solution != NULL) {    // if this is the first solution, copy to first_solution
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
                     first_solution[i][j] = temp[i][j];
-        } else if (*num_solutions > 1) { // if this is the second solution, don't do anything, return 2 to stop recursion.
+        } else if (*num_solutions > 1) {                        // if this is the second solution, don't do anything, return 2 to stop recursion.
             return false;
         }
         return true;
@@ -99,32 +107,76 @@ static bool unique_solver_helper(int temp[9][9], int first_solution[9][9], int *
     // empty spot was found
     for (int i = 1; i <= 9; i++) {
         // if the number 'i' satisfies the rules for its spot, 
-        if (is_valid(temp, row, col, i)) {
+        if (is_num_valid(temp, row, col, i)) {
             // set that spot to 'i'
             temp[row][col] = i;
 
             // if second solution found, stop recursing
             if (!unique_solver_helper(temp, first_solution, num_solutions))
                 return false;
-            else // otherwise, reset to 0 and try more numbers
+            else                                                // otherwise, reset to 0 and try more numbers
                 temp[row][col] = 0;
         }
     }
 
-    //no numbers worked for that spot, keep trying to look for more possibilities before
+    // no numbers worked for that spot, keep trying to look for more possibilities before
     return true;
 }
 
-/**************** is_valid ****************/
+/**************** is_puzzle_valid ****************/
 /*
- * Checks if the given value in [row, col] in the given puzzle is valid by
+ * Checks if the given 9x9 sudoku puzzle is valid by checking each row, column,
+ * and box for duplicate and invalid numbers (0 <= num <= 9).
+ * Caller must provide a valid pointer to an int[9][9] containing the puzzle.
+ * 0 indicate empty nums.
+ * Returns true if puzzle is valid, else false.
+ */
+static bool is_puzzle_valid(int puzzle[9][9])
+{
+    // iterate over every num
+    for (int i = 0; i < 9; i++) {
+        for (int j = 0; j < 9; j++) {
+            if (puzzle[i][j] < 0 || puzzle[i][j] > 9) return false;             // check bounds
+            if (puzzle[i][j] == 0) continue;                                    // skip if 0
+            
+            // check rows (starting from current index only)
+            for (int ri = i + 1; ri < 9; ri++)
+                if (puzzle[i][j] == puzzle[ri][j]) return false;
+
+            // check cols (starting from current index only)
+            for (int ci = j + 1; ci < 9; ci++)
+                if (puzzle[i][j] == puzzle[i][ci]) return false;
+
+            // check box (starting from current index only)
+            int end_row = i - (i % 3) + 2;
+            int end_col = j - (j % 3) + 2;
+            for (int ri = i; ri <= end_row; ri++) {                             // start iterating from current row
+                for (int ci = end_col - 2; ci <= end_col; ci++) {               // start iterating from first column of every box
+                    if (ri == i && ci == end_col - 2) {                         // if at beginning of loop, set pos to num's curr index
+                        ci = j;
+                        continue;
+                    }
+                    if (puzzle[i][j] == puzzle[ri][ci]) return false;
+                }
+            }
+        }
+    }
+
+    // return true if no duplicates/invalid nums found
+    return true;
+}
+
+/**************** is_num_valid ****************/
+/*
+ * Checks if a given value would be valid at [row, col] in the given puzzle by
  * checking for duplicates in its row, column, and box.
+ * Assumes the actual num at [row, col] is currently != val.
  * Caller provides a valid int[9][9] pointer containing the puzzle, the row and
  * column indices of the number, and the value itself.
  * Returns true if the num is valid, i.e. no duplicates, or if the num <= 0.
  * Returns false if the num is invalid, i.e. duplicates were found.
  */
-static bool is_valid(int array[9][9], int row, int col, int val)
+static bool is_num_valid(int array[9][9], int row, int col, int val)
 {
     // return true if num <= 0
     if (val <= 0) return true;
