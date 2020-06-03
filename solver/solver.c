@@ -53,7 +53,7 @@ void sudoku_solver(void)
     }
 
     #ifdef DEBUG
-        printf("\nSolver parsed sudoku puzzle:\n");
+        printf("Solver parsed sudoku puzzle:\n");
         print_sudoku(sudoku);
     #endif
 
