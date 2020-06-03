@@ -5,7 +5,7 @@ C = common
 R = creator
 S = solver
 
-# Comment or uncomment the below statement to enable/disable debug printing.
+# Comment or uncomment DEBUG flags within module makefiles to control DEBUG printing per module. This flag only for sudoku.c.
 # DEBUG = -D DEBUG
 
 CC = gcc
@@ -31,14 +31,15 @@ $(PROG): $(OBJS)
 sudoku.o: $C/common.h $R/creator.h $S/solver.h
 	$(CC) $(CFLAGS) -c -o $@ sudoku.c 
 
-$R/creator.o: $C/common.h $R/creator.h
-	$(CC) $(CFLAGS) -c -o $@ $R/creator.c 
+############# Uncomment below rules if module makefiles are missing for whatever reason ########################
+#$R/creator.o: $C/common.h $R/creator.h
+#	$(CC) $(CFLAGS) -c -o $@ $R/creator.c 
 
-$S/solver.o: $C/common.h $S/solver.h
-	$(CC) $(CFLAGS) -c -o $@ $S/solver.c
+#$S/solver.o: $C/common.h $S/solver.h
+#	$(CC) $(CFLAGS) -c -o $@ $S/solver.c
 
-$C/common.o: $C/common.h
-	$(CC) $(CFLAGS) -c -o $@ $C/common.c
+#$C/common.o: $C/common.h
+#	$(CC) $(CFLAGS) -c -o $@ $C/common.c
 
 ############## clean  ##########
 clean:
