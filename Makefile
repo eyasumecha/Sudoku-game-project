@@ -55,4 +55,4 @@ test:
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all ./$(PROG) create
-	valgrind --leak-check=full --show-leak-kinds=all ./$(PROG) solve < tests/test3/test3
+	valgrind --leak-check=full --show-leak-kinds=all ./$(PROG) solve < tests/test2/test2
