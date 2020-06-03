@@ -33,4 +33,6 @@ Also see `STYLEGUIDE.md` and `TODO.md`.
 - creator/
 - solver/
 - common/
+- sudoku.c
+- ...
 
