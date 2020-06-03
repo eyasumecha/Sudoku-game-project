@@ -70,6 +70,10 @@ void sudoku_solver(void)
         print_sudoku(solution);
         if (ret == 2)
             printf("Multiple solutions found.\n");
+        #ifdef DEBUG
+            if(ret == 1)
+                printf("Unique solution! Normally, nothing is printed when DEBUG flag turned off.\n");
+        #endif
     } 
 }
 

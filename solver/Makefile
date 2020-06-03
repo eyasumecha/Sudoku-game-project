@@ -1,6 +1,6 @@
 # Makefile for 'solver' module 
 
-# DEBUG = -D DEBUG
+DEBUG = -D DEBUG
 C = ../common
 CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$C $(DEBUG)
 CC = gcc
