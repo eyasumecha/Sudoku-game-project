@@ -19,12 +19,13 @@ https://dartmouth.zoom.us/rec/share/wOMoAanQ609LYafTyF_uWZEjBqTiaaa8hiAervQFmR1l
 Where create will create a sudoku puzzle guaranteed to have
  1. a unique solution
  2. 40 or more numbers removed from the puzzle
+
 and solve will
  1. solve any sudoku puzzle passed in to stdin and let the user know whether
-  - the input format was invalid
-  - there's no solutions
-  - there's a unique solution
-  - there's multiple solutions
+   - the input format was invalid
+   - there's no solutions
+   - there's a unique solution
+   - there's multiple solutions
  2. print the solved puzzle (if available) to stdout
 
 The format of the sudoku puzzle must be
