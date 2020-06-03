@@ -1,12 +1,13 @@
 # Makefile for 'solver' module 
 
-CFLAGS = -Wall -pedantic -std=c11 -ggdb -I../common
+# DEBUG = -D DEBUG
+C = ../common
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -I$C $(DEBUG)
 CC = gcc
-DEBUG = -D DEBUG
 
 #rules
-solver.o: ../common/common.o solver.c 
-	$(CC) $(CFLAGS) $^ -c -o $@ $(DEBUG)
+solver.o: solver.c $C/common.h
+	$(CC) $(CFLAGS) -c -o $@ solver.c
 
 clean:
 	rm -f *~ *.o *.dSYM

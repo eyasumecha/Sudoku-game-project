@@ -1,3 +1,9 @@
+/*
+ * solver.c - implements the solver module. Accepts a 9x9 sudoku puzzle from
+ * stdin (digits separated by whitespace) and outputs the solved puzzle to
+ * stdout. See docs for more info.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -6,36 +12,44 @@
 #include <ctype.h>
 #include "common.h"
 
-void solver(){
-    int **sudoku = (int **)malloc(9 * sizeof(int*));
-    for(int i = 0; i < 9; i++){
-        sudoku[i] = (int *)malloc(9 * sizeof(int));
-    }
-    int value;
-    int x =0, y = 0;
-    while (scanf("%d", &value) != EOF && x < 9){
-       sudoku[x][y] = value;
-       y++;
-       if(y == 9){
-           y = 0;
-           x++;
-       }
-    }
-    
-    // check if the input puzzle was correctly parsed.
-    if(x != 9){
-        fprintf(stderr, "Input sudoku was of incorrect format. Exiting...\n");
-        for(int i = 0; i < 9; i++){
-            free(sudoku[i]);
+void sudoku_solver(void)
+{
+    int sudoku[9][9]= {0};
+    int row = 0, col = 0;
+    bool expect_digit = true;               // flag to keep track of if to expect digit (only after at least one whitespace)
+    char c;
+
+    // read chars from stdin until EOF or error
+    while ((c = fgetc(stdin)) != EOF) {
+        // ignore whitespace (' ', '\t', '\n', '\v', '\f', '\r')
+        if (isspace(c)) {
+            expect_digit = true;
+            continue;
         }
-        free(sudoku);
-        return;
+
+        // if char is digit and we were expecting a digit (previous char was whitespace)
+        if (isdigit(c) && expect_digit) {
+            sudoku[row][col] = c - '0';         // converts digit from ASCII to int
+            expect_digit = false;
+            // increment [row, col] values accordingly
+            if (++col >= 9) {
+                col = 0;
+                row += 1;
+            }
+            // break if we are done filling up the board
+            if (row >= 9)
+                break;
+        } else {
+            // invalid input: bad character or multiple digits at once.
+            fprintf(stderr, "Invalid input: only digits and whitespace allowed. Each digit must be separated by at least one whitespace character.\n");
+            return;
+        }
     }
 
-    //create some memory to hold the solution
-    int **solution = (int **) calloc(9, sizeof(int *));
-    for(int i = 0; i < 9; i++){
-        solution[i] = (int *) calloc(9, sizeof(int));
+    // check if board has been filled
+    if (row < 9) {
+        fprintf(stderr, "Invalid input: not enough numbers.\n");
+        return;
     }
 
     #ifdef DEBUG
@@ -43,27 +57,19 @@ void solver(){
         print_sudoku(sudoku);
     #endif
 
+    int solution[9][9] = {0};
     int ret = unique_solver(sudoku, solution);
     
     #ifdef DEBUG
         printf("\nSolved sudoku:\n");
     #endif
 
-    if(ret == 0){
+    if (ret == 0) {
         printf("No solutions found.\n");
-    }else{
+    } else {
         print_sudoku(solution);
-        if(ret == 2)
+        if (ret == 2)
             printf("Multiple solutions found.\n");
-    }
-    
-    //clean up memory
-    for(int i = 0; i < 9; i++){
-        free(solution[i]);
-    }
-    free(solution);
-    for(int i = 0; i < 9; i++){
-        free(sudoku[i]);
-    }
-    free(sudoku);
+    } 
 }
+
