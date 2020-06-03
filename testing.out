@@ -1,0 +1,28 @@
+Begin testing
+
+Test 1: Testing sudoku with invalid parameters (./sudoku)
+Wrong number of arguments.
+Usage: sudoku [create|solve]
+
+Test 2: Testing sudoku with invalid parameters (./sudoku iLikePie)
+Argument was not create or solve.
+Usage: sudoku [create|solve]
+
+Test 3: Testing sudoku with invalid parameters (./sudoku create solve)
+Wrong number of arguments.
+Usage: sudoku [create|solve]
+
+Test 4: Ask sudoku to create a puzzle using creator module (./sudoku create)
+0 0 0 9 0 5 7 0 8
+4 0 0 0 6 0 5 0 2
+0 5 0 8 0 0 0 0 1
+1 0 0 6 2 0 0 0 0
+0 0 0 0 0 0 1 5 9
+7 0 0 0 0 0 2 0 0
+0 6 0 5 0 4 0 0 0
+0 3 0 7 0 0 6 0 0
+5 0 0 0 8 0 0 0 0
+
+Test 5: Testing invalid stdin format to solver module (./sudoku solve < /dev/null)
+Wrong number of arguments.
+Usage: sudoku [create|solve]

@@ -51,8 +51,8 @@ clean:
 	$(MAKE) -C $S clean
 
 test:
-	./$(PROG) create
+	./testing.sh 3
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all ./$(PROG) create
-
+	valgrind --leak-check=full --show-leak-kinds=all ./$(PROG) solve < tests/test3/test3

@@ -16,6 +16,7 @@ data*/
 *.out
 *.dSYM/
 core
+!testing.out
 
 #Program exec
 sudoku
