@@ -52,6 +52,8 @@ The only argument allowed to the sudoku program are create and solve, all other 
 - DESIGN.md
 - IMPLEMENTATION.md
 - TESTING.md
+- COLLABORATING.md (our collaboration and github workflow, for reference)
+- STYLEGUIDE.md (how we styled our code, for reference)
 - Makefile
 - testing.sh
 - testing.out
@@ -60,5 +62,3 @@ The only argument allowed to the sudoku program are create and solve, all other 
 - common/
 - tests/
 - sudoku.c
-
-## Git Workflow
