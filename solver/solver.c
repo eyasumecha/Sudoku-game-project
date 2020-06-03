@@ -53,7 +53,7 @@ void sudoku_solver(void)
     }
 
     #ifdef DEBUG
-        printf("\nSolver parsed sudoku puzzle:\n");
+        printf("Solver parsed sudoku puzzle:\n");
         print_sudoku(sudoku);
     #endif
 
@@ -70,6 +70,10 @@ void sudoku_solver(void)
         print_sudoku(solution);
         if (ret == 2)
             printf("Multiple solutions found.\n");
+        #ifdef DEBUG
+            if(ret == 1)
+                printf("Unique solution! Normally, nothing is printed when DEBUG flag turned off.\n");
+        #endif
     } 
 }
 
