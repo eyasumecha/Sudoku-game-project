@@ -98,7 +98,7 @@ static bool unique_solver_helper(int temp[9][9], int first_solution[9][9], int *
             for (int i = 0; i < 9; i++)
                 for (int j = 0; j < 9; j++)
                     first_solution[i][j] = temp[i][j];
-        } else if (*num_solutions > 1) {                        // if this is the second solution, don't do anything, return 2 to stop recursion.
+        } else if (*num_solutions > 1) {                        // if this is the second solution, don't do anything, return false to stop recursion.
             return false;
         }
         return true;
