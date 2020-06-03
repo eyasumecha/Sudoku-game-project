@@ -10,7 +10,7 @@ https://dartmouth.zoom.us/rec/share/wOMoAanQ609LYafTyF_uWZEjBqTiaaa8hiAervQFmR1l
 
 `make` to compile.
 
-`./sudoku [create|solve]`
+`./sudoku [create|solve]` to run the sudoku creator or solver, depending on the argument passed in.
 
 `make clean` to clean up output files.
 
@@ -62,3 +62,15 @@ The only argument allowed to the sudoku program are create and solve, all other 
 - common/
 - tests/
 - sudoku.c
+
+## Dependencies
+
+The sudoku.c main program depends on both creator and solver modules.
+
+Both creator and solver modules rely on common code found in the common module.
+
+Each module has its own Makefile, which is called by the top-level project Makefile. Compilation is handled by the top-level Makefile and so is the default testing script call.
+
+## Error Codes
+ 1. Incorrect number of arguments
+ 2. Invalid argument (not create or solve)
