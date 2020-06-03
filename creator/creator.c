@@ -85,21 +85,11 @@ static void shuffle(int puzzle[9][9])
     }
 
     // Re-orient the puzzle according to the newly generated int arrays of
-    // shuffled col/row positions.
-
-    // Re-orient cols.
+    // shuffled col and row positions.
     copy_puzzle(puzzle, puzzle_copy);
     for (int i = 0; i < 9; i++) {
         for (int j = 0; j < 9; j++) {
-            puzzle[j][i] = puzzle_copy[j][pos_total[0][i]];
-        }
-    }
-
-    // Re-orient rows.
-    copy_puzzle(puzzle, puzzle_copy);
-    for (int i = 0; i < 9; i++) {
-        for (int j = 0; j < 9; j++) {
-            puzzle[i][j] = puzzle_copy[pos_total[1][i]][j];
+            puzzle[i][j] = puzzle_copy[pos_total[0][i]][pos_total[1][j]];
         }
     }
 }
