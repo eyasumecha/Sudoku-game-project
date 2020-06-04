@@ -356,7 +356,7 @@ writing the algorithm out. Also, Pratinav wrote this function and it's super
 concise and well-written and I don't understand the math behind it. Super
 cool implementation though. Apparently it's super efficient too, only checks
 numbers which haven't been checked before so we don't double-check (but
-I would know, since Pratinav is asleep after pulling an all-nighter and I'd
+I wouldn't know, since Pratinav is asleep after pulling an all-nighter and I'd
 rather defer to his wisdom on this function).
 
 ### `is_num_valid`
