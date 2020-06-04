@@ -11,6 +11,9 @@
 /**************** sudoku_solver ****************/
 /*
  * Called by sudoku when solve is the argument passed.
+ * It will parse the puzzle from stdin and print the
+ * solution, if it finds one. Otherwise, an error
+ * message will be printed to stderr instead.
  */
 void sudoku_solver(void);
 

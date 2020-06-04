@@ -1,4 +1,4 @@
-# Dartmouth CS50 20S, Sudoku Project
+# Dartmouth CS50 20Spring, Sudoku Project
 
 Members: Pratinav Bagla, Wendell Wu, Eyasu Lemma
 
